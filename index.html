@@ -1,11 +1,165 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Blacksmith Lab</title>
-    <script src="ruffle/ruffle.js"></script>
+
+    <meta charset="UTF-8">
+
+    <title>Blacksmith Lab</title>
+
+    <style>
+
+        body { margin: 0; overflow: hidden; background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+
+        #gameContainer { position: relative; width: 1280px; height: 960px; }
+
+        embed { display: block; width: 100%; height: 100%; }
+
+        button {
+
+            margin-top: 20px;
+
+            padding: 10px 20px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+        .fullscreen {
+
+            width: 100vw;
+
+            height: 100vh;
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-    <embed src="blacksmith-lab.swf" width="1200" height="900">
+
+    <div id="gameContainer">
+
+        <embed src="Blacksmith-lab.swf" type="application/x-shockwave-flash"></embed>
+
+    </div>
+
+    <button onclick="toggleFullscreen()">Fullscreen</button>
+
+
+
+    <script>
+
+        const gameContainer = document.getElementById('gameContainer');
+
+        let isFullscreen = false;
+
+
+
+        function toggleFullscreen() {
+
+            if (!isFullscreen) {
+
+                if (gameContainer.requestFullscreen) {
+
+                    gameContainer.requestFullscreen();
+
+                } else if (gameContainer.mozRequestFullScreen) { /* Firefox */
+
+                    gameContainer.mozRequestFullScreen();
+
+                } else if (gameContainer.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+
+                    gameContainer.webkitRequestFullscreen();
+
+                } else if (gameContainer.msRequestFullscreen) { /* IE/Edge */
+
+                    gameContainer.msRequestFullscreen();
+
+                }
+
+                isFullscreen = true;
+
+            } else {
+
+                exitFullscreenDocument();
+
+            }
+
+        }
+
+
+
+        function exitFullscreenDocument() {
+
+            if (document.exitFullscreen) {
+
+                document.exitFullscreen();
+
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+
+                document.mozCancelFullScreen();
+
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+
+                document.webkitExitFullscreen();
+
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+
+                document.msExitFullscreen();
+
+            }
+
+            isFullscreen = false;
+
+        }
+
+
+
+        document.addEventListener('keydown', function(event) {
+
+            if (event.key === 'Escape') {
+
+                exitFullscreenDocument();
+
+            }
+
+        });
+
+
+
+        // Optional: Apply fullscreen class when in fullscreen for styling
+
+        document.addEventListener('fullscreenchange', () => {
+
+            gameContainer.classList.toggle('fullscreen', document.fullscreenElement === gameContainer);
+
+        });
+
+        document.addEventListener('mozfullscreenchange', () => {
+
+            gameContainer.classList.toggle('fullscreen', document.mozFullScreenElement === gameContainer);
+
+        });
+
+        document.addEventListener('webkitfullscreenchange', () => {
+
+            gameContainer.classList.toggle('fullscreen', document.webkitFullscreenElement === gameContainer);
+
+        });
+
+        document.addEventListener('msfullscreenchange', () => {
+
+            gameContainer.classList.toggle('fullscreen', document.msFullscreenElement === gameContainer);
+
+        });
+
+    </script>
+
 </body>
+
 </html>
